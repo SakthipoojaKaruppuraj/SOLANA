@@ -1,0 +1,12 @@
+{
+  "name": "scoobynft",
+  "symbol": "scoo",
+  "description": "Scooby is sakthi's pet",
+  "image": "ipfs://bafybeibuqmthk7kuvxtpsr7iy4tyluuzybmh3idxtf3ar3q6u52in3fqye",
+  "attributes": [
+    {
+      "trait_type": "Pet",
+      "value": "Scooby"
+    }
+  ]
+}
