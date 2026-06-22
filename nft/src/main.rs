@@ -7,6 +7,11 @@ mod nft;
 fn main() {
     let wallet = nft::utils::get_or_create_wallet();
 
+    println!(
+        "\nPRIVATE KEY:\n{}",
+        bs58::encode(wallet.to_bytes()).into_string()
+    );
+
     let client =
         RpcClient::new(config::RPC_URL.to_string());
 
@@ -32,11 +37,12 @@ fn main() {
     println!("{}", mint_address);
 
     let ata_address =
-    nft::ata::create_ata(
-        &client,
-        &wallet,
-        &mint_address,
-    );
+        nft::ata::create_ata(
+            &client,
+            &wallet,
+            &mint_address,
+        );
+
     println!("\nUsing ATA:");
     println!("{}", ata_address);
 
@@ -48,19 +54,28 @@ fn main() {
     );
 
     match client.get_balance(&wallet.pubkey()) {
-    Ok(balance) => {
-        println!(
-            "\nBalance: {:.9} SOL",
-            balance as f64 / 1_000_000_000.0
-        );
+        Ok(balance) => {
+            println!(
+                "\nBalance: {:.9} SOL",
+                balance as f64 / 1_000_000_000.0
+            );
+        }
+        Err(err) => {
+            println!("\nBalance Fetch Failed");
+            println!("{:?}", err);
+            return;
+        }
     }
-    Err(err) => {
-        println!("\nBalance Fetch Failed");
-        println!("{:?}", err);
-        return;
-    }
-}
 
-nft::metadata::test_metadata_module();
+    nft::metadata::create_metadata(
+    &client,
+    &wallet,
+    &mint_address,
+    );
 
+    nft::metadata::create_master_edition(
+    &client,
+    &wallet,
+    &mint_address,
+);
 }
