@@ -33,7 +33,7 @@ pub struct InitializePool<'info> {
     pub pool: Account<'info, Pool>,
 
     /// CHECK:
-    /// PDA that will own both token vaults.
+    /// PDA used as the authority for the vaults and LP mint.
     #[account(
         seeds = [
             b"vault-authority",
@@ -42,6 +42,21 @@ pub struct InitializePool<'info> {
         bump
     )]
     pub vault_authority: UncheckedAccount<'info>,
+
+    #[account(
+        init,
+        payer = authority,
+        mint::decimals = 9,
+        mint::authority = vault_authority,
+        mint::freeze_authority = vault_authority,
+        mint::token_program = token_program,
+        seeds = [
+            b"lp-mint",
+            pool.key().as_ref()
+        ],
+        bump
+    )]
+    pub lp_mint: InterfaceAccount<'info, Mint>,
 
     #[account(
         init,

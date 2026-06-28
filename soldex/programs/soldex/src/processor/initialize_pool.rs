@@ -24,7 +24,7 @@ pub fn initialize_pool(
     pool.vault_b = ctx.accounts.vault_b.key();
 
     // LP mint will be created next milestone
-    pool.lp_mint = Pubkey::default();
+    pool.lp_mint = ctx.accounts.lp_mint.key();
 
     // Pool configuration
     pool.fee_bps = fee_bps;
