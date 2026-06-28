@@ -17,11 +17,13 @@ pub struct AddLiquidity<'info> {
     #[account(mut)]
     pub pool: Account<'info, Pool>,
 
-    #[account(mut)]
     pub token_a_mint: InterfaceAccount<'info, Mint>,
 
-    #[account(mut)]
     pub token_b_mint: InterfaceAccount<'info, Mint>,
+
+    /// CHECK:
+    /// PDA that owns the vaults and LP mint.
+    pub vault_authority: UncheckedAccount<'info>,
 
     #[account(mut)]
     pub vault_a: InterfaceAccount<'info, TokenAccount>,

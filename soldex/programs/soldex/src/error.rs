@@ -3,7 +3,16 @@ use anchor_lang::prelude::*;
 #[error_code]
 pub enum SoldexError {
     #[msg("Invalid token mint")]
-    InvalidMint,
+    InvalidTokenMint,
+
+    #[msg("Invalid vault account")]
+    InvalidVault,
+
+    #[msg("Invalid LP mint")]
+    InvalidLpMint,
+
+    #[msg("Invalid vault authority")]
+    InvalidVaultAuthority,
 
     #[msg("Pool already initialized")]
     PoolAlreadyInitialized,
