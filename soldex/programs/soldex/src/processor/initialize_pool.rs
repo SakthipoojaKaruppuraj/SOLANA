@@ -26,6 +26,9 @@ pub fn initialize_pool(
     // LP mint will be created next milestone
     pool.lp_mint = ctx.accounts.lp_mint.key();
 
+    pool.reserve_a = 0;
+    pool.reserve_b = 0;
+
     // Pool configuration
     pool.fee_bps = fee_bps;
     pool.total_lp_supply = 0;
