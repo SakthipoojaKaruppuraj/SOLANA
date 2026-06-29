@@ -2,11 +2,7 @@ use anchor_lang::prelude::*;
 
 use crate::contexts::InitializePool;
 
-pub fn initialize_pool(
-    ctx: Context<InitializePool>,
-    fee_bps: u16,
-) -> Result<()> {
-
+pub fn initialize_pool(ctx: Context<InitializePool>, fee_bps: u16) -> Result<()> {
     let pool = &mut ctx.accounts.pool;
 
     // Admin
@@ -32,7 +28,7 @@ pub fn initialize_pool(
     // Pool configuration
     pool.fee_bps = fee_bps;
     pool.total_lp_supply = 0;
-    pool.bump = ctx.bumps.pool;
+    pool.bump = ctx.bumps.vault_authority;
     pool.is_initialized = true;
 
     msg!("===============================");

@@ -1,5 +1,5 @@
 [workspace]
-members = [
+members = [ "app",
     "programs/*"
 ]
 resolver = "2"

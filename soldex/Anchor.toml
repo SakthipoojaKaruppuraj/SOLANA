@@ -5,14 +5,17 @@ package_manager = "yarn"
 resolution = true
 skip-lint = false
 
+[programs.localnet]
+soldex = "8KSsmmLyR35acaVM9o9EiQgYyV3PFrGKqzYLCcck8qSH"
+
 [programs.devnet]
 soldex = "8KSsmmLyR35acaVM9o9EiQgYyV3PFrGKqzYLCcck8qSH"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "cargo test"
+test = "cargo test && yarn ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
 
 [hooks]

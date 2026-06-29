@@ -1,12 +1,8 @@
-use anchor_lang::prelude::*;
 use anchor_lang::prelude::InterfaceAccount;
+use anchor_lang::prelude::*;
 
 use anchor_spl::associated_token::AssociatedToken;
-use anchor_spl::token_interface::{
-    Mint,
-    TokenAccount,
-    TokenInterface,
-};
+use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 
 use crate::state::Pool;
 

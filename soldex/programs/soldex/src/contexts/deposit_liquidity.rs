@@ -7,7 +7,7 @@ use crate::error::SoldexError;
 use crate::state::Pool;
 
 #[derive(Accounts)]
-pub struct RemoveLiquidity<'info> {
+pub struct DepositLiquidity<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
 
@@ -27,19 +27,6 @@ pub struct RemoveLiquidity<'info> {
         constraint = vault_authority.key() == pool.vault_authority @ SoldexError::InvalidVaultAuthority
     )]
     pub vault_authority: UncheckedAccount<'info>,
-
-    #[account(
-        mut,
-        constraint = lp_mint.key() == pool.lp_mint @ SoldexError::InvalidLpMint
-    )]
-    pub lp_mint: Box<InterfaceAccount<'info, Mint>>,
-
-    #[account(
-        mut,
-        constraint = user_lp_token.owner == user.key(),
-        constraint = user_lp_token.mint == lp_mint.key() @ SoldexError::InvalidLpMint
-    )]
-    pub user_lp_token: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         constraint = token_a_mint.key() == pool.token_a_mint @ SoldexError::InvalidTokenMint
@@ -76,6 +63,19 @@ pub struct RemoveLiquidity<'info> {
         constraint = user_token_b.mint == token_b_mint.key() @ SoldexError::InvalidTokenMint
     )]
     pub user_token_b: Box<InterfaceAccount<'info, TokenAccount>>,
+
+    #[account(
+        mut,
+        constraint = lp_mint.key() == pool.lp_mint @ SoldexError::InvalidLpMint
+    )]
+    pub lp_mint: Box<InterfaceAccount<'info, Mint>>,
+
+    #[account(
+        mut,
+        constraint = user_lp_token.owner == user.key(),
+        constraint = user_lp_token.mint == lp_mint.key() @ SoldexError::InvalidLpMint
+    )]
+    pub user_lp_token: Box<InterfaceAccount<'info, TokenAccount>>,
 
     pub token_program: Interface<'info, TokenInterface>,
 }
